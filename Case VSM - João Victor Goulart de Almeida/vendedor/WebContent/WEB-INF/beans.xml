@@ -1,0 +1,7 @@
+<beans>
+	<interceptors>
+		<class>br.com.casevsm.vendedores.tx.GerenciadorDeTransacao</class>
+		<class>br.com.casevsm.vendedores.tx.TempoDeExecucaoInterceptor</class>
+	</interceptors>
+
+</beans>

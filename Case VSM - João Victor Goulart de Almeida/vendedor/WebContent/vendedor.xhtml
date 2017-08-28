@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+	<!-- <f:metadata>
+		<f:viewParam name="vendedorId" value="#{vendedorBean.vendedorId}" />
+		<f:viewAction action="#{vendedorBean.carregaPelaId}"
+			if="#{param['vendedorId'] != null}" />
+	</f:metadata> -->
+	<ui:define name="titulo">
+	<p:outputPanel>Novo Vendedor</p:outputPanel>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="formL" >
+			<p:messages id="mensagens" />
+			<p:fieldset legend="Dados do Vendedor" >
+				<h:panelGrid columns="4" id="panel" cellpadding="10"  >
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{vendedorBean.vendedor.nome}"
+						required="true" requiredMessage="Nome é obrigatorio "
+						validatorMessage="Nome não pode ser superior a 40"  >
+						<f:validateLength maximum="40" />
+					</p:inputText>
+						<p:outputLabel value="CPF: " for="cpf" />
+					<p:inputMask id="cpf" value="#{vendedorBean.vendedor.cpf}" mask="999.999.999-99" required="true" requiredMessage="CPF é obrigatorio " />
+					
+				
+					<p:outputLabel value="Senha" for="senha" />
+					<p:inputText id="senha" value="#{vendedorBean.vendedor.senha}"
+						required="true" requiredMessage="Senha é obrigatorio "
+						validatorMessage="senha não pode ser superior a 40" >
+						<f:validateLength maximum="40" />
+					</p:inputText>
+						<p:outputLabel value="Email:" for="email" />
+					<p:inputText id="email" value="#{vendedorBean.vendedor.email}"
+						required="true" requiredMessage="Email é obrigatorio "
+						validatorMessage="O tipo de email não esta correto">
+						<f:attribute name="type" value="email" />
+							<f:passThroughAttribute name="placeholder" value="Email do Vendedor" />
+							<f:validateRegex pattern=".+@.+" />
+							<f:ajax event="blur" render="messageEmail" />
+					</p:inputText>
+				
+					<p:outputLabel value="Data de Nascimento" for="dataNascimento" />
+					 <p:calendar id="dataNascimento"
+						value="#{vendedorBean.vendedor.dataNascimento}" mode="popup" pattern="dd/MM/yyyy" />
+				</h:panelGrid>
+			</p:fieldset>
+
+
+			<p:fieldset legend="Dados do Endereço">
+				<h:panelGrid columns="4" id="dados" cellpadding="10">
+				<p:outputLabel value="Selecione a cidade:" for="cidade" />
+				<p:selectOneMenu value="#{vendedorBean.cidadeId}" id="cidade" required="true" requiredMessage="Cidade é obrigatorio">
+					<f:selectItems value="#{vendedorBean.cidades}" var="cidade"
+						itemLabel="#{cidade.nome} (#{cidade.estado})" itemValue="#{cidade.id}" />
+				</p:selectOneMenu>
+				
+				<!-- <p:commandLink value="Cadastrar nova cidade"
+					action="cidade?faces-redirect=true" immediate="true" process="@all" />
+				</p:panelGrid> -->
+				<p:commandLink value="Cadastrar nova cidade"
+					onclick="PF('cidade').show();" type="button"  immediate="true" process="@all" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="3" cellpadding="10">
+				<p:outputLabel value="CEP" for="cep" />
+					<p:inputMask id="cep" name="cep" value="#{vendedorBean.vendedor.cep}"
+						required="true" requiredMessage="CEP é obrigatorio" mask="99999-999" />
+				<p:commandButton action="#{vendedorBean.buscaCep}" value="Buscar" update="@form"/>
+				</h:panelGrid>
+				<h:panelGrid columns="2" cellpadding="10">
+				<p:outputLabel value="Bairro" for="bairro" />
+					<p:inputText id="bairro" name="bairro" value="#{vendedorBean.vendedor.bairro}" />
+					<p:outputLabel value="Rua" for="logradouro" />
+					<p:inputText id="logradouro" name="logradouro" value="#{vendedorBean.vendedor.rua}" />
+				<p:outputLabel value="Numero" for="numero" />
+					<p:inputText id="numero" value="#{vendedorBean.vendedor.numero}"/>
+				<p:outputLabel value="Celular: " for="celular" />
+					<p:inputMask id="celular" value="#{vendedorBean.vendedor.telefone}" mask="(99) 99999-9999"/>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:commandButton value="Gravar" action="#{vendedorBean.gravar}" update="@form :formVendedor:tabelaVendedores" process="@form" />
+		
+			<p:commandButton value="Reset" style="margin-right:20px;" update="panel" process="@this">
+
+                <p:resetInput target="panel" />
+            </p:commandButton>
+		</h:form>
+		<h:form id="formVendedor">
+			<p:dataTable id="tabelaVendedores" value="#{vendedorBean.vendedores}"
+				var="vendedor" emptyMessage="Nenhum Vendedor Cadastrado">
+					<f:facet name="header">Vendedores</f:facet>
+				<p:column headerText="Id"  filterMatchMode="contains">
+					<h:outputText value="#{vendedor.id}" />
+				</p:column>
+				<p:column headerText="Vendedores"  filterMatchMode="contains">
+					<h:outputText value="#{vendedor.nome}" />
+				</p:column>
+				<p:column headerText="CPF"  filterMatchMode="contains">
+					<h:outputText value="#{vendedor.cpf}" />
+				</p:column>
+				<p:column headerText="Email"  filterMatchMode="contains">
+					<h:outputText value="#{vendedor.email}" />
+				</p:column>
+				<p:column headerText="Contato"  filterMatchMode="contains">
+					<h:outputText value="#{vendedor.telefone}" />
+				</p:column>
+
+		
+				<p:column headerText="Nascimento">
+					
+					<h:outputText value="#{vendedor.dataNascimento.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column> 
+				<p:column headerText="Alterar">
+					<p:commandButton update=":formL" process="@this" value="alterar" actionListener="#{vendedorBean.carregar(vendedor)}" icon="fa fa-fw fa-edit" />
+				</p:column>					
+				
+				<p:column headerText="Remover">
+					<p:commandButton update="@form" process="@this" value="remover" actionListener="#{vendedorBean.remover(vendedor)}" icon="fa fa-fw fa-remove" />
+				</p:column>	
+			</p:dataTable>
+		</h:form>
+		<p:dialog header="Cadastro de Cidades" widgetVar="cidade"  resizable="false" modal="true" height="250" draggable="false">
+   			<h:form id="cidadeForm">
+			<p:fieldset legend="Dados da Cidade">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:outputLabel value="Cidade:" for="nome" require="true" />
+					<p:inputText id="nome" value="#{cidadeBean.cidade.nome}"  required="true" requiredMessage="Obrigatorio inserir o nome da cidade"/>
+
+					<p:outputLabel value="Selecione o Estado" for="estado" />
+					<p:selectOneMenu value="#{cidadeBean.cidade.estado}" id="estado" required="true" requiredMessage="Obrigatorio escolher um estado">
+						<f:selectItem itemLabel="SP" itemValue="SP" />
+						<f:selectItem itemLabel="PR" itemValue="PR" />
+						<f:selectItem itemLabel="RS" itemValue="RS" />
+						<f:selectItem itemLabel="AM" itemValue="AM" />
+						<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						<f:selectItem itemLabel="RN" itemValue="RN" />
+						<f:selectItem itemLabel="SC" itemValue="SC" />
+						<f:selectItem itemLabel="MS" itemValue="MS" />
+						<f:selectItem itemLabel="MG" itemValue="MG" />
+						<f:selectItem itemLabel="PE" itemValue="PE" />
+						<f:selectItem itemLabel="AL" itemValue="AL" />
+						<f:selectItem itemLabel="PA" itemValue="PA" />
+						<f:selectItem itemLabel="RR" itemValue="RR" />
+						<f:selectItem itemLabel="SE" itemValue="SE" />
+						<f:selectItem itemLabel="TO" itemValue="TO" />
+					</p:selectOneMenu>
+					
+					<p:commandButton value="Gravar" actionListener="#{cidadeBean.gravar}"
+						update="@form formL" process="@form" onclick="PF('cidade').hide();"  />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+		</p:dialog>
+	</ui:define>
+	<ui:define name="texto">
+  		Cadastro de vendedores
+	</ui:define>
+
+</ui:composition>
+
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head >
+	<title>Vendedores</title>
+</h:head>
+<h:body>
+	<div id="titulo">
+		<h:graphicImage library="img" name="logo.png" />
+		<h:form>
+			<p:themeSwitcher id="basic" style="width:165px"
+				value="#{temaBean.tema}">
+				<f:selectItem itemLabel="Aristo" itemValue="aristo" />
+				<f:selectItem itemLabel="Vader" itemValue="vader" />
+				<f:selectItem itemLabel="Bootstrap" itemValue="bootstrap" />
+				<f:selectItem itemLabel="Omega" itemValue="omega" />
+				<f:ajax />
+			</p:themeSwitcher>
+		</h:form>
+		<p:growl id="messages" showDetail="true" autoUpdate="true" />
+		<h:form rendered="#{usuarioLogado != null}">
+			<p:outputLabel
+				value="Bem Vindo #{sessionScope['usuarioLogado'].nome} &nbsp;" />
+			<p:menuButton value="Menu">
+				<p:menuitem value="Vendedores" action="vendedor?faces-redirect=true"
+					update="messages" icon="fa fa-fw fa-users" />
+				<p:menuitem value="Cidades" action="cidade?faces-redirect=true"
+					ajax="false" icon="fa fa-fw fa-home" />
+				<p:menuitem value="Vendas" action="vendas?faces-redirect=true"
+					update="messages" icon="fa fa-fw fa-line-chart" />
+				<p:separator />
+				<p:menuitem value="Logout" action="#{loginBean.deslogar}"
+					icon="fa fa-fw fa-sign-out" />
+			</p:menuButton>
+		</h:form>
+		<h1>
+			<ui:insert name="titulo"></ui:insert>
+		</h1>
+
+
+	</div>
+	<div id="conteudo">
+		<ui:insert name="conteudo">
+		</ui:insert>
+	</div>
+	<div id="rodape">
+		&copy; Copyright 2017 - João Victor Goulart
+		<ui:insert name="texto">
+		</ui:insert>
+	</div>
+</h:body>
+</html>

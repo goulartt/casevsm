@@ -1,0 +1,19 @@
+Java -> 1.8
+Case VSM -> JSF 2.2 + Hibernate + Primefaces 6.1 + Jersey 1.8
+Servidor -> Apache TomCat 9.0
+IDE -> Eclipse Oxygen
+SGBD -> WorkBench
+
+1. Crie uma database chamada casevsm_vendedores
+2. Edite as credenciais do banco no persistence.xml do projeto Vendedores
+3. Execute o projeto para gerar as tabelas, caso nao gerar na hora acesse http://localhost:8080/vendedor/login.xhtml e clique em login para gerar as tabelas.
+4. Faça seu cadastro em http://localhost:8080/vendedor/login.xhtml
+5. Utilize as credenciais insiridas para realizar o Login.
+6. Cadastre uma cidade.
+7. Cadastre um vendedor.
+8. Para consumir o XML do vendedor via rest acesse http://localhost:8080/vendedor/rest/(id dele)
+9. Teste a aplicação.
+10. O projeto a parte consome o XML que for digitado, basta executar ele via console. A tag consumido dentro de vendedores muda para S logo que alguem visualiza.
+11. Qualquer duvida envie um email para jv.goulart.almeida@hotmail.com ou me chame ai do lado se eu estiver ai
+
+João Victor Goulart de Almeida

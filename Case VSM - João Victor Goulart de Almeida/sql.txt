@@ -1,0 +1,4 @@
+ create table Cidade (id integer not null auto_increment, estado varchar(255), nome varchar(255), primary key (id)) ENGINE=InnoDB;
+ create table Usuario (id integer not null auto_increment, cpf varchar(255), nome varchar(255), senha varchar(255), primary key (id)) ENGINE=InnoDB;
+ create table Vendedor (id integer not null auto_increment, bairro varchar(255), cep varchar(255), consumido varchar(255), cpf varchar(255), dataNascimento datetime, email varchar(255), nome varchar(255), numero varchar(255), rua varchar(255), senha varchar(255), telefone varchar(255), cidade_id integer, primary key (id)) ENGINE=InnoDB;
+ alter table Vendedor add index FK85E02507BBFD6542 (cidade_id), add constraint FK85E02507BBFD6542 foreign key (cidade_id) references Cidade (id);

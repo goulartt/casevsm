@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="_template.xhtml">
+	<f:metadata>
+		<f:viewParam name="autorId" value="#{autorBean.autor.id}" />
+		<f:viewAction action="#{autorBean.carregaPelaId}"
+			if="#{param.autorId != null}" />
+	</f:metadata>
+	<ui:define name="titulo">
+		<p:outputPanel>Nova cidade</p:outputPanel>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="cidadeForm">
+			<p:fieldset legend="Dados da Cidade">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:outputLabel value="Cidade:" for="nome" require="true" />
+					<p:inputText id="nome" value="#{cidadeBean.cidade.nome}"  required="true" requiredMessage="Obrigatorio inserir o nome da cidade"/>
+
+					<p:outputLabel value="Selecione o Estado" for="estado" />
+					<p:selectOneMenu value="#{cidadeBean.cidade.estado}" id="estado" required="true" requiredMessage="Obrigatorio escolher um estado">
+						<f:selectItem itemLabel="SP" itemValue="SP" />
+						<f:selectItem itemLabel="PR" itemValue="PR" />
+						<f:selectItem itemLabel="RS" itemValue="RS" />
+						<f:selectItem itemLabel="AM" itemValue="AM" />
+						<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						<f:selectItem itemLabel="RN" itemValue="RN" />
+						<f:selectItem itemLabel="SC" itemValue="SC" />
+						<f:selectItem itemLabel="MS" itemValue="MS" />
+						<f:selectItem itemLabel="MG" itemValue="MG" />
+						<f:selectItem itemLabel="PE" itemValue="PE" />
+						<f:selectItem itemLabel="AL" itemValue="AL" />
+						<f:selectItem itemLabel="PA" itemValue="PA" />
+						<f:selectItem itemLabel="RR" itemValue="RR" />
+						<f:selectItem itemLabel="SE" itemValue="SE" />
+						<f:selectItem itemLabel="TO" itemValue="TO" />
+					</p:selectOneMenu>
+					
+					<p:commandButton value="Gravar" action="#{cidadeBean.gravar}"
+						update="@form :tabelaCidade:dlCid" process="@form" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+		<h:form id="tabelaCidade">
+			<p:dataTable value="#{cidadeBean.cidades}" var="cidade" id="dlCid" emptyMessage="Nenhuma cidade cadastrada">
+				<f:facet name="header">
+		            Cidades
+		        </f:facet>
+				<p:column headerText="Nome"  filterMatchMode="contains">
+					<h:outputText value="#{cidade.nome}" />
+				</p:column>
+				<p:column headerText="Estado"  filterMatchMode="contains">
+					<h:outputText value="#{cidade.estado}" />
+				</p:column>
+		      	 <p:column headerText="Alterar">
+					<p:commandButton update=":cidadeForm" process="@this" value="alterar" actionListener="#{cidadeBean.editaNome(cidade)}" icon="fa fa-fw fa-edit" />
+				</p:column>					
+				
+				<p:column headerText="Remover">
+					<p:commandButton update="@form" process="@this" value="remover" action="#{cidadeBean.removeCidade(cidade)}" icon="fa fa-fw fa-remove" />
+				</p:column>	
+		    </p:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="texto">
+  			Cadastro de Cidades
+		</ui:define>
+</ui:composition>
+</html>
