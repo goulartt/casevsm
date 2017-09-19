@@ -1,9 +1,11 @@
 Java -> 1.8
-Case VSM -> JSF 2.2 + Hibernate + Primefaces 6.1 + Jersey 1.8
+Case VSM 1 -> JSF 2.2 + Hibernate + Primefaces 6.1 + Jersey 1.8 
+Case VSM 2 -> Spring Boot 1.5.7 + Maven + Hibernate + Bootstrap
 Servidor -> Apache TomCat 9.0
 IDE -> Eclipse Oxygen
 SGBD -> WorkBench
 
+CASE 1
 1. Crie uma database chamada casevsm_vendedores
 2. Edite as credenciais do banco no persistence.xml do projeto Vendedores
 3. Execute o projeto para gerar as tabelas, caso nao gerar na hora acesse http://localhost:8080/vendedor/login.xhtml e clique em login para gerar as tabelas.
@@ -15,5 +17,26 @@ SGBD -> WorkBench
 9. Teste a aplicação.
 10. O projeto a parte consome o XML que for digitado, basta executar ele via console. A tag consumido dentro de vendedores muda para S logo que alguem visualiza.
 11. Qualquer duvida envie um email para jv.goulart.almeida@hotmail.com ou me chame ai do lado se eu estiver ai
+
+
+CASE 2
+1. Crie uma database chamada treinoSpring;
+2.  Edite as credenciais do banco no persistence.xml
+3. De maven clean e maven install
+4. Suba o projeto e deixe o hibernate criar as tabelas.
+5. Rode o seguinte Script:
+
+insert into Role values('ROLE_ADMIN');
+insert into Usuario (cpf, nome, senha, id_vendedor) values ('123', 'Administrador', '$2a$10$Id.kK6S39MZTHVKSmbVi0uIo5gy2Ch7x/0osfCnvX3prPz3oBvd2u', 999);
+insert into Usuario_permissoes (Usuario_id_vendedor, permissoes_nome) values (999, 'ROLE_ADMIN');
+
+6. Acesse http://localhost:8080/ e o login (que voce inseriiu) é 123 e 123
+7. Cadastre uma cidade e depois um vendedor.
+8. Se voce acessar http://localhost:8080/vendedores/json -> vera todos vendedores e nao consome
+9. Se voce acessar http://localhost:8080/vendedores/(idVendedor)/json -> vera o respectivo vendedor e consumira e nao listara mais nessa requisição
+10. Tem uma classe consumer dentro do projeto para testar isso[
+11. Qualquer duvida envie um email para jv.goulart.almeida@hotmail.com ou me chame ai do lado se eu estiver ai
+
+
 
 João Victor Goulart de Almeida

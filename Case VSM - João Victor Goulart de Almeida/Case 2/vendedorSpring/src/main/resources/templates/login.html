@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+	    <title>Spring Security</title>
+
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+	</head>
+
+	<body style="background-color: #f9f9f9">
+		<div class="row">
+			<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+				<div th:if="${param.error}">
+					<div class="alert alert-danger"
+					   th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message} + ': Usuario e/ou invalidos!'">Usuario e/ou invalidos!</div>
+				</div>
+
+				<div th:if="${param.logout}">
+					<div class="alert alert-info">Ate logo!</div>
+				</div>
+
+				<div class="panel panel-info">
+					<div class="panel-heading">
+				    	<h3 class="panel-title">Entre</h3>
+				  	</div>
+					<div class="panel-body">
+						<form th:action="@{/login}" method="post">
+							<div class="form-group">
+								<input name="username" class="form-control" placeholder="Usuário"/>
+							</div>
+
+							<div class="form-group">
+								<input type="password" name="password" class="form-control" placeholder="Senha"/>
+							</div>
+
+							<div class="form-group">
+								<button class="btn btn-primary btn-block">Entrar</button>
+							</div>
+
+							<div class="form-group">
+								<input type="checkbox" id="remember-me" name="remember-me" />
+								<label for="remember-me">Lembrar?</label>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</body>
+</html>
